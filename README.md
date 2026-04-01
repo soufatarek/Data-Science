@@ -6,8 +6,10 @@ A data-science project analysing the impact of moving level gates in the mobile 
 
 The goal is to determine whether moving a level gate from Level 30 to Level 40 affects player retention. The analysis includes:
 
+- **Web Scraping** — Real BeautifulSoup scraping of 4 Wikipedia pages with sequential vs parallel performance comparison
+- **Data Quality Audit** — IQR outlier detection, Z-score analysis, schema validation, and missing value checks
 - **A/B Testing** — Bootstrap analysis to compare retention rates between groups
-- **Data Augmentation** — Web scraping of gaming-industry retention benchmarks
+- **Data Augmentation** — Genre benchmarks from scraped industry data merged into the primary dataset
 - **Machine Learning** — Binary classification pipeline (`sklearn.Pipeline`) for predicting player churn
 - **Comprehensive Evaluation** — Accuracy, Precision, Recall, F1-score, ROC-AUC
 
@@ -15,35 +17,42 @@ The goal is to determine whether moving a level gate from Level 30 to Level 40 a
 
 | Phase | Location |
 |-------|----------|
-| Business Understanding | `notebooks/01_crisp_dm_analysis.ipynb` §1 |
-| Data Understanding | `notebooks/01_crisp_dm_analysis.ipynb` §2 |
-| Data Preparation | `notebooks/01_crisp_dm_analysis.ipynb` §3 + `src/processing.py` |
-| Modelling | `notebooks/01_crisp_dm_analysis.ipynb` §4 + `src/modeling.py` |
-| Evaluation | `notebooks/01_crisp_dm_analysis.ipynb` §5 |
-| Conclusion | `notebooks/01_crisp_dm_analysis.ipynb` §6 |
+| Business Understanding | `notebooks/final_pipeline.ipynb` Step 1 |
+| Data Understanding | `notebooks/final_pipeline.ipynb` Steps 2-3 (Audit + Clean) |
+| Data Preparation | `src/processing.py` → `data_audit()`, `preprocess_data()`, `engineer_features()` |
+| Web Scraping | `src/scraping.py` → `run_full_scraping_pipeline()` |
+| Modelling | `src/modeling.py` → `train_models()`, `tune_hyperparameters()` |
+| Evaluation | `notebooks/final_pipeline.ipynb` Steps 10-11 |
+| Conclusion | `notebooks/final_pipeline.ipynb` (Pipeline Complete) |
 
 ## Project Structure
 
 ```
 📁 d:/Data Science/
-├── 📁 data/                    # Raw and processed datasets
-│   └── cookie_cats.csv
-├── 📁 notebooks/               # Jupyter notebooks
-│   ├── 01_crisp_dm_analysis.ipynb   # ← Main CRISP-DM analysis
-│   ├── final_pipeline.ipynb         # ← Reproducible end-to-end pipeline
-│   ├── 01_exploration.ipynb         # Legacy exploration
-│   ├── 02_ab_testing.ipynb          # Legacy A/B testing
-│   └── 03_modeling.ipynb            # Legacy modelling
-├── 📁 src/                     # Modular Python scripts
+├── 📁 data/
+│   ├── 📁 raw/                     # Original untouched data
+│   │   └── cookie_cats.csv
+│   ├── 📁 processed/               # Cleaned & augmented data
+│   │   └── cookie_cats_augmented.csv
+│   └── 📁 scraped/                 # Web-scraped data
+│       └── benchmarks.json
+├── 📁 notebooks/
+│   ├── final_pipeline.ipynb        # ← Main reproducible pipeline (33 cells)
+│   ├── 01_crisp_dm_analysis.ipynb  # CRISP-DM walkthrough
+│   ├── 01_exploration.ipynb        # Legacy exploration
+│   ├── 02_ab_testing.ipynb         # Legacy A/B testing
+│   └── 03_modeling.ipynb           # Legacy modelling
+├── 📁 src/
 │   ├── __init__.py
-│   ├── processing.py           # Data loading, cleaning, feature engineering
-│   ├── ab_testing.py           # Bootstrap analysis functions
-│   ├── modeling.py             # sklearn Pipeline, evaluation, tuning
-│   └── scraping.py             # Industry benchmark scraping
-├── 📁 reports/                 # Visualisations and final report
-│   └── 📁 figures/
-├── 📄 requirements.txt         # Python dependencies
-└── 📄 README.md                # This file
+│   ├── processing.py               # Load, audit, clean, features, split
+│   ├── ab_testing.py               # Bootstrap analysis functions
+│   ├── modeling.py                 # sklearn Pipeline, evaluation, tuning
+│   └── scraping.py                 # Real BeautifulSoup + Selenium scraping
+├── 📁 reports/
+│   └── 📁 figures/                 # Auto-generated visualisations
+├── 📄 requirements.txt
+├── 📄 .gitignore
+└── 📄 README.md
 ```
 
 ## Setup Instructions
@@ -70,21 +79,23 @@ The goal is to determine whether moving a level gate from Level 30 to Level 40 a
 
 4. **Download the dataset**:
    - Kaggle: [Cookie Cats A/B Testing](https://www.kaggle.com/datasets/mursideyarkin/mobile-games-ab-testing-cookie-cats)
-   - Place the CSV in `data/cookie_cats.csv`
+   - Place the CSV in `data/raw/cookie_cats.csv`
 
 ## Usage
 
 | Step | What to Run |
 |------|-------------|
-| **Full CRISP-DM analysis** | Open `notebooks/01_crisp_dm_analysis.ipynb` |
-| **Reproducible pipeline** | Open `notebooks/final_pipeline.ipynb` → *Kernel → Restart & Run All* |
-| **CLI quick-run** | `python src/modeling.py` |
+| **Full CRISP-DM pipeline** | Open `notebooks/final_pipeline.ipynb` → *Kernel → Restart & Run All* |
+| **CLI quick-run (processing)** | `python src/processing.py` |
+| **CLI quick-run (scraping)** | `python src/scraping.py` |
+| **CLI quick-run (modelling)** | `python src/modeling.py` |
 
 ## Key Results
 
-1. Moving the gate from level 30 → 40 **decreases** 7-day retention (statistically significant).
-2. The best ML model achieves ROC-AUC above the random baseline.
-3. Cookie Cats retention compares favourably to industry benchmarks for match-3 games.
+1. Moving the gate from level 30 → 40 **decreases** 7-day retention by ~0.8pp (statistically significant).
+2. IQR analysis reveals 11.28% outliers in `sum_gamerounds` — capped at 99th percentile for robust modelling.
+3. Parallel web scraping achieves **1.85× speedup** over sequential scraping.
+4. Cookie Cats retention compares favourably to industry benchmarks for match-3 games.
 
 ## License
 
