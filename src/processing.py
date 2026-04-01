@@ -86,21 +86,167 @@ def explore_data(df: pd.DataFrame) -> Dict[str, Any]:
 
 
 # ---------------------------------------------------------------------------
-# 3. Cleaning / Preprocessing
+# 3. Data Audit (pre-cleaning quality assessment)
 # ---------------------------------------------------------------------------
 
-def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
+def data_audit(df: pd.DataFrame) -> Dict[str, Any]:
+    """
+    Perform a rigorous data quality assessment *before* cleaning.
+
+    This function satisfies the coursework "Data Audit" requirement
+    by checking:
+
+    1. **Schema validation** — expected columns, dtypes, value ranges.
+    2. **Missing values** — counts and percentages per column.
+    3. **Duplicate detection** — exact and user-ID duplicates.
+    4. **Outlier detection (IQR)** — for ``sum_gamerounds``.
+    5. **Outlier detection (Z-score)** — for all numeric columns.
+
+    Args:
+        df: Raw DataFrame from :func:`load_data`.
+
+    Returns:
+        Dictionary summarising every check, suitable for rendering
+        in a notebook or report.
+    """
+    from scipy import stats as scipy_stats
+
+    print("=" * 60)
+    print("  DATA QUALITY AUDIT")
+    print("=" * 60)
+
+    audit: Dict[str, Any] = {}
+
+    # ── 3.1  Schema validation ────────────────────────────────────
+    expected_cols = {'userid', 'version', 'sum_gamerounds',
+                     'retention_1', 'retention_7'}
+    actual_cols = set(df.columns)
+    missing_cols = expected_cols - actual_cols
+    extra_cols = actual_cols - expected_cols
+
+    audit['schema'] = {
+        'expected_columns': sorted(expected_cols),
+        'actual_columns': sorted(actual_cols),
+        'missing_columns': sorted(missing_cols),
+        'extra_columns': sorted(extra_cols),
+        'schema_valid': len(missing_cols) == 0,
+    }
+    print(f"\n  Schema valid        : {audit['schema']['schema_valid']}")
+    if missing_cols:
+        print(f"  ⚠ Missing columns  : {missing_cols}")
+
+    # ── 3.2  Missing values ───────────────────────────────────────
+    missing_counts = df.isnull().sum()
+    missing_pcts = (df.isnull().mean() * 100).round(2)
+    audit['missing_values'] = {
+        'counts': missing_counts.to_dict(),
+        'percentages': missing_pcts.to_dict(),
+        'total_missing_cells': int(missing_counts.sum()),
+        'columns_with_missing': missing_counts[missing_counts > 0].index.tolist(),
+    }
+    print(f"  Total missing cells : {audit['missing_values']['total_missing_cells']}")
+
+    # ── 3.3  Duplicates ───────────────────────────────────────────
+    exact_dups = int(df.duplicated().sum())
+    userid_dups = int(df['userid'].duplicated().sum()) if 'userid' in df.columns else 0
+    audit['duplicates'] = {
+        'exact_duplicate_rows': exact_dups,
+        'duplicate_userids': userid_dups,
+    }
+    print(f"  Exact duplicate rows: {exact_dups}")
+    print(f"  Duplicate user IDs  : {userid_dups}")
+
+    # ── 3.4  Outlier detection — IQR method ───────────────────────
+    if 'sum_gamerounds' in df.columns:
+        col = df['sum_gamerounds']
+        Q1 = col.quantile(0.25)
+        Q3 = col.quantile(0.75)
+        IQR = Q3 - Q1
+        lower_bound = Q1 - 1.5 * IQR
+        upper_bound = Q3 + 1.5 * IQR
+
+        outliers_iqr = df[(col < lower_bound) | (col > upper_bound)]
+        audit['outliers_iqr'] = {
+            'column': 'sum_gamerounds',
+            'Q1': float(Q1),
+            'Q3': float(Q3),
+            'IQR': float(IQR),
+            'lower_bound': float(lower_bound),
+            'upper_bound': float(upper_bound),
+            'outlier_count': len(outliers_iqr),
+            'outlier_pct': round(len(outliers_iqr) / len(df) * 100, 2),
+        }
+        print(f"\n  IQR outliers (sum_gamerounds):")
+        print(f"    Q1={Q1:.0f}, Q3={Q3:.0f}, IQR={IQR:.0f}")
+        print(f"    Bounds: [{lower_bound:.0f}, {upper_bound:.0f}]")
+        print(f"    Outliers: {len(outliers_iqr):,} ({audit['outliers_iqr']['outlier_pct']}%)")
+
+    # ── 3.5  Outlier detection — Z-score ──────────────────────────
+    numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+    zscore_outliers: Dict[str, int] = {}
+    for c in numeric_cols:
+        z = np.abs(scipy_stats.zscore(df[c].dropna()))
+        n_outliers = int((z > 3).sum())
+        zscore_outliers[c] = n_outliers
+
+    audit['outliers_zscore'] = {
+        'threshold': 3.0,
+        'outlier_counts': zscore_outliers,
+    }
+    print(f"\n  Z-score outliers (|z| > 3):")
+    for c, n in zscore_outliers.items():
+        print(f"    {c:30s}: {n:,}")
+
+    # ── 3.6  Value range checks ───────────────────────────────────
+    range_checks: Dict[str, Dict[str, Any]] = {}
+    if 'sum_gamerounds' in df.columns:
+        range_checks['sum_gamerounds'] = {
+            'min': float(df['sum_gamerounds'].min()),
+            'max': float(df['sum_gamerounds'].max()),
+            'negative_values': int((df['sum_gamerounds'] < 0).sum()),
+        }
+    if 'version' in df.columns:
+        valid_versions = {'gate_30', 'gate_40'}
+        actual_versions = set(df['version'].unique())
+        range_checks['version'] = {
+            'unique_values': sorted(actual_versions),
+            'unexpected_values': sorted(actual_versions - valid_versions),
+        }
+    audit['range_checks'] = range_checks
+
+    print(f"\n  Value ranges:")
+    if 'sum_gamerounds' in range_checks:
+        r = range_checks['sum_gamerounds']
+        print(f"    sum_gamerounds: [{r['min']:.0f}, {r['max']:.0f}]"
+              f"  (negative: {r['negative_values']})")
+
+    print(f"\n{'='*60}")
+    return audit
+
+
+# ---------------------------------------------------------------------------
+# 4. Cleaning / Preprocessing
+# ---------------------------------------------------------------------------
+
+def preprocess_data(
+    df: pd.DataFrame,
+    cap_outliers: bool = True,
+    cap_percentile: float = 0.99,
+) -> pd.DataFrame:
     """
     Clean the raw dataset.
 
     Steps performed:
         1. Drop duplicate ``userid`` rows (if any).
         2. Cast boolean retention columns to integers for modelling.
-        3. Report any missing values (the Cookie Cats dataset is
-           generally clean, but the check is here for robustness).
+        3. Report any missing values.
+        4. **Cap outliers** in ``sum_gamerounds`` at the given percentile
+           (default 99th) to reduce extreme-value influence.
 
     Args:
         df: Raw DataFrame from :func:`load_data`.
+        cap_outliers: Whether to cap extreme game-round values.
+        cap_percentile: Percentile threshold for capping (default 0.99).
 
     Returns:
         Cleaned DataFrame ready for feature engineering.
@@ -122,12 +268,20 @@ def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
     df_clean['retention_1'] = df_clean['retention_1'].astype(int)
     df_clean['retention_7'] = df_clean['retention_7'].astype(int)
 
+    # Outlier capping
+    if cap_outliers and 'sum_gamerounds' in df_clean.columns:
+        cap_val = df_clean['sum_gamerounds'].quantile(cap_percentile)
+        n_capped = (df_clean['sum_gamerounds'] > cap_val).sum()
+        df_clean['sum_gamerounds'] = df_clean['sum_gamerounds'].clip(upper=cap_val)
+        print(f"Capped {n_capped:,} extreme game-round values at "
+              f"{cap_percentile:.0%} percentile ({cap_val:.0f} rounds).")
+
     print(f"After cleaning: {df_clean.shape[0]:,} rows")
     return df_clean
 
 
 # ---------------------------------------------------------------------------
-# 4. Feature Engineering
+# 5. Feature Engineering
 # ---------------------------------------------------------------------------
 
 def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
@@ -189,7 +343,7 @@ def engineer_features(df: pd.DataFrame) -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------------------
-# 5. A/B Group Splitting
+# 6. A/B Group Splitting
 # ---------------------------------------------------------------------------
 
 def create_ab_groups(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
@@ -210,7 +364,7 @@ def create_ab_groups(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.DataFrame]:
 
 
 # ---------------------------------------------------------------------------
-# 6. Retention Metrics
+# 7. Retention Metrics
 # ---------------------------------------------------------------------------
 
 def calculate_retention_metrics(
@@ -239,7 +393,7 @@ def calculate_retention_metrics(
 
 
 # ---------------------------------------------------------------------------
-# 7. Modelling-Ready Split
+# 8. Modelling-Ready Split
 # ---------------------------------------------------------------------------
 
 def prepare_modeling_data(
@@ -298,6 +452,7 @@ def prepare_modeling_data(
 if __name__ == "__main__":
     df = load_data()
     info = explore_data(df)
+    audit_results = data_audit(df)
     df_clean = preprocess_data(df)
     df_feat = engineer_features(df_clean)
     gate_30, gate_40 = create_ab_groups(df_feat)

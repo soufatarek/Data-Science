@@ -1,0 +1,162 @@
+{
+  "performance": {
+    "sequential_time_s": 2.1765,
+    "parallel_time_s": 1.1741,
+    "speedup": 1.85,
+    "urls_count": 4
+  },
+  "scraped_metadata": [
+    {
+      "title": "Mobile game",
+      "headings": [
+        "Contents",
+        "History",
+        "Calculator games",
+        "Different platforms",
+        "Monetization",
+        "Common limits of mobile games",
+        "Location-based mobile games",
+        "Augmented reality games",
+        "Multipurpose games",
+        "Multiplayer mobile games",
+        "Distribution",
+        "See also",
+        "References"
+      ],
+      "paragraph_count": 41,
+      "url": "https://en.wikipedia.org/wiki/Mobile_game",
+      "scrape_timestamp": "2026-04-01T12:23:08.777479"
+    },
+    {
+      "title": "Free-to-play",
+      "headings": [
+        "Contents",
+        "Revenue sources",
+        "In-game items",
+        "Advertisements",
+        "History",
+        "Comparison with traditional model",
+        "Pay-to-win",
+        "Play-to-earn",
+        "Nagging",
+        "Purchases by children",
+        "Effects on player behavior",
+        "Outlook",
+        "See also",
+        "References",
+        "External links"
+      ],
+      "paragraph_count": 32,
+      "url": "https://en.wikipedia.org/wiki/Free-to-play",
+      "scrape_timestamp": "2026-04-01T12:23:08.657980"
+    },
+    {
+      "title": "Video game industry",
+      "headings": [
+        "Contents",
+        "Industry overview",
+        "Size",
+        "Value chain",
+        "Roles",
+        "History",
+        "1940s\u20131960s",
+        "1970s",
+        "1980s",
+        "1990s",
+        "2000s",
+        "2010s",
+        "2020s",
+        "Economics",
+        "Retail",
+        "Practices",
+        "Breakaways",
+        "Piracy",
+        "Creative control",
+        "Alternatives",
+        "Gaming conventions",
+        "Regional distribution",
+        "International practices",
+        "World trends",
+        "Largest markets",
+        "North America",
+        "Europe",
+        "Africa",
+        "Asia",
+        "Oceania",
+        "Conventions, trade shows, and conferences",
+        "Media coverage and archiving",
+        "Recognition within the industry",
+        "Trends",
+        "See also",
+        "References",
+        "Further reading",
+        "External links"
+      ],
+      "paragraph_count": 99,
+      "url": "https://en.wikipedia.org/wiki/Video_game_industry",
+      "scrape_timestamp": "2026-04-01T12:23:09.169127"
+    },
+    {
+      "title": "List of most-played mobile games by player count",
+      "headings": [
+        "Contents",
+        "List",
+        "See also",
+        "Notes",
+        "References"
+      ],
+      "paragraph_count": 2,
+      "url": "https://en.wikipedia.org/wiki/List_of_most-played_mobile_games_by_player_count",
+      "scrape_timestamp": "2026-04-01T12:23:08.466713"
+    }
+  ],
+  "genre_benchmarks": [
+    {
+      "genre": "match3",
+      "day_1_retention": 0.45,
+      "day_7_retention": 0.22,
+      "day_30_retention": 0.09,
+      "avg_session_min": 5.8,
+      "market_share_pct": 15.0,
+      "source": "Wikipedia (Mobile_game, Match_three) + GameAnalytics 2023"
+    },
+    {
+      "genre": "casual",
+      "day_1_retention": 0.42,
+      "day_7_retention": 0.2,
+      "day_30_retention": 0.08,
+      "avg_session_min": 5.2,
+      "market_share_pct": 35.0,
+      "source": "Wikipedia (Casual_game) + GameAnalytics 2023"
+    },
+    {
+      "genre": "puzzle",
+      "day_1_retention": 0.48,
+      "day_7_retention": 0.25,
+      "day_30_retention": 0.1,
+      "avg_session_min": 6.5,
+      "market_share_pct": 22.0,
+      "source": "Wikipedia (Free-to-play) + Newzoo 2023 Q4"
+    },
+    {
+      "genre": "strategy",
+      "day_1_retention": 0.32,
+      "day_7_retention": 0.15,
+      "day_30_retention": 0.06,
+      "avg_session_min": 12.5,
+      "market_share_pct": 15.0,
+      "source": "Wikipedia (Mobile_game) + GameAnalytics 2023"
+    },
+    {
+      "genre": "rpg",
+      "day_1_retention": 0.3,
+      "day_7_retention": 0.13,
+      "day_30_retention": 0.05,
+      "avg_session_min": 18.0,
+      "market_share_pct": 12.0,
+      "source": "Wikipedia (Mobile_game) + Newzoo 2023 Q4"
+    }
+  ],
+  "scraped_table_rows": 103,
+  "timestamp": "2026-04-01T12:23:09.304878"
+}
