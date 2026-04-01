@@ -1,8 +1,8 @@
 {
   "performance": {
-    "sequential_time_s": 2.1765,
-    "parallel_time_s": 1.1741,
-    "speedup": 1.85,
+    "sequential_time_s": 2.1851,
+    "parallel_time_s": 1.3892,
+    "speedup": 1.57,
     "urls_count": 4
   },
   "scraped_metadata": [
@@ -25,7 +25,7 @@
       ],
       "paragraph_count": 41,
       "url": "https://en.wikipedia.org/wiki/Mobile_game",
-      "scrape_timestamp": "2026-04-01T12:23:08.777479"
+      "scrape_timestamp": "2026-04-01T12:29:53.173103"
     },
     {
       "title": "Free-to-play",
@@ -48,7 +48,7 @@
       ],
       "paragraph_count": 32,
       "url": "https://en.wikipedia.org/wiki/Free-to-play",
-      "scrape_timestamp": "2026-04-01T12:23:08.657980"
+      "scrape_timestamp": "2026-04-01T12:29:52.354325"
     },
     {
       "title": "Video game industry",
@@ -94,7 +94,7 @@
       ],
       "paragraph_count": 99,
       "url": "https://en.wikipedia.org/wiki/Video_game_industry",
-      "scrape_timestamp": "2026-04-01T12:23:09.169127"
+      "scrape_timestamp": "2026-04-01T12:29:52.908596"
     },
     {
       "title": "List of most-played mobile games by player count",
@@ -107,7 +107,7 @@
       ],
       "paragraph_count": 2,
       "url": "https://en.wikipedia.org/wiki/List_of_most-played_mobile_games_by_player_count",
-      "scrape_timestamp": "2026-04-01T12:23:08.466713"
+      "scrape_timestamp": "2026-04-01T12:29:52.200259"
     }
   ],
   "genre_benchmarks": [
@@ -157,6 +157,6 @@
       "source": "Wikipedia (Mobile_game) + Newzoo 2023 Q4"
     }
   ],
-  "scraped_table_rows": 103,
-  "timestamp": "2026-04-01T12:23:09.304878"
+  "scraped_table_rows": 0,
+  "timestamp": "2026-04-01T12:29:53.248791"
 }
