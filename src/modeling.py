@@ -173,7 +173,6 @@ def get_model_zoo(random_state: int = 42) -> Dict[str, Any]:
             random_state=random_state,
             eval_metric='logloss',
             use_label_encoder=False,
-            device='cuda',
             tree_method='hist',
         ),
         'Gradient Boosting': GradientBoostingClassifier(

@@ -647,6 +647,13 @@ def run_full_scraping_pipeline(
     }
     save_scraped_data(save_payload)
 
+    # Also save benchmarks as CSV for multi-source data integration
+    csv_path = os.path.join(
+        os.path.dirname(__file__), '..', 'data', 'scraped', 'industry_benchmarks.csv'
+    )
+    genre_benchmarks.to_csv(csv_path, index=False)
+    print(f"  📊 Benchmarks CSV → {csv_path}")
+
     # Step 4 — Augment primary dataset if provided
     augmented_df = None
     if primary_df is not None:

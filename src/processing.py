@@ -280,6 +280,28 @@ def preprocess_data(
     return df_clean
 
 
+def save_processed_data(
+    df: pd.DataFrame,
+    filename: str = "cookie_cats_clean.csv",
+) -> str:
+    """
+    Save a processed DataFrame to ``data/processed/``.
+
+    Args:
+        df: Cleaned / engineered DataFrame.
+        filename: Output file name.
+
+    Returns:
+        Absolute path of the saved file.
+    """
+    out_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'processed')
+    os.makedirs(out_dir, exist_ok=True)
+    out_path = os.path.join(out_dir, filename)
+    df.to_csv(out_path, index=False)
+    print(f"💾 Saved processed data → {out_path}")
+    return out_path
+
+
 # ---------------------------------------------------------------------------
 # 5. Feature Engineering
 # ---------------------------------------------------------------------------
@@ -454,6 +476,7 @@ if __name__ == "__main__":
     info = explore_data(df)
     audit_results = data_audit(df)
     df_clean = preprocess_data(df)
+    save_processed_data(df_clean, "cookie_cats_clean.csv")
     df_feat = engineer_features(df_clean)
     gate_30, gate_40 = create_ab_groups(df_feat)
     metrics = calculate_retention_metrics(gate_30, gate_40)
