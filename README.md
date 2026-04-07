@@ -40,13 +40,15 @@ The goal is to determine whether moving a level gate from Level 30 to Level 40 a
 │   └── 📁 scraped/                 # Web-scraped data
 │       ├── benchmarks.json
 │       └── industry_benchmarks.csv
-├── 📁 notebooks/
-│   ├── final_pipeline.ipynb        # ← Main reproducible pipeline (39 cells)
-│   ├── 04_eda_visualizations.ipynb # ← Dedicated EDA (40 cells, 16 plots)
-│   ├── 01_crisp_dm_analysis.ipynb  # CRISP-DM walkthrough
-│   ├── 01_exploration.ipynb        # ⚠️ Deprecated → 04_eda
-│   ├── 02_ab_testing.ipynb         # ⚠️ Deprecated → final_pipeline
-│   └── 03_modeling.ipynb           # ⚠️ Deprecated → final_pipeline
+├── 📁 notebooks/                   # 7 CRISP-DM phase notebooks
+│   ├── 01_business_understanding.ipynb      # Phase 1: Business context & research Qs
+│   ├── 02_data_audit_and_cleaning.ipynb     # Phase 2-3: Load, audit, clean
+│   ├── 03_web_scraping.ipynb                # Phase 2: External data scraping
+│   ├── 04_eda_visualizations.ipynb          # Phase 2: 16 publication-quality plots
+│   ├── 05_feature_engineering_and_modeling.ipynb  # Phase 3-4: Features & ML training
+│   ├── 06_evaluation_and_ab_testing.ipynb   # Phase 5: Evaluation & statistics
+│   ├── 07_conclusions.ipynb                 # Phase 6: Conclusions & recommendations
+│   └── final_pipeline.ipynb                 # Reference: full pipeline (single file)
 ├── 📁 src/
 │   ├── __init__.py
 │   ├── processing.py               # Load, audit, clean, features, split
@@ -88,13 +90,25 @@ The goal is to determine whether moving a level gate from Level 30 to Level 40 a
 
 ## Usage
 
-| Step | What to Run |
-|------|-------------|
-| **Full CRISP-DM pipeline** | Open `notebooks/final_pipeline.ipynb` → *Kernel → Restart & Run All* |
-| **EDA visualisations** | Open `notebooks/04_eda_visualizations.ipynb` → *Kernel → Restart & Run All* |
-| **CLI quick-run (processing)** | `python src/processing.py` |
-| **CLI quick-run (scraping)** | `python src/scraping.py` |
-| **CLI quick-run (modelling)** | `python src/modeling.py` |
+### Notebook Sequence (run in order)
+
+| # | Notebook | What it Does |
+|---|----------|-------------|
+| 1 | `01_business_understanding.ipynb` | Business context, research questions, KPIs |
+| 2 | `02_data_audit_and_cleaning.ipynb` | Load raw data, audit, clean, save CSV |
+| 3 | `03_web_scraping.ipynb` | Scrape Wikipedia, compare seq/parallel, augment |
+| 4 | `04_eda_visualizations.ipynb` | 16 publication-quality exploratory plots |
+| 5 | `05_feature_engineering_and_modeling.ipynb` | Engineer features, train LR/RF/XGBoost |
+| 6 | `06_evaluation_and_ab_testing.ipynb` | Evaluate models, A/B stats, scalability |
+| 7 | `07_conclusions.ipynb` | Final conclusions & business recommendations |
+
+### CLI Quick-Run
+
+| Command | Purpose |
+|---------|---------|
+| `python src/processing.py` | Run data processing pipeline |
+| `python src/scraping.py` | Run web scraping pipeline |
+| `python src/modeling.py` | Run model training pipeline |
 
 ## Key Results
 

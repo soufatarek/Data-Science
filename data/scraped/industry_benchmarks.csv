@@ -1,0 +1,6 @@
+genre,day_1_retention,day_7_retention,day_30_retention,avg_session_min,market_share_pct,source
+match3,0.45,0.22,0.09,5.8,15.0,"Wikipedia (Mobile_game, Match_three) + GameAnalytics 2023"
+casual,0.42,0.2,0.08,5.2,35.0,Wikipedia (Casual_game) + GameAnalytics 2023
+puzzle,0.48,0.25,0.1,6.5,22.0,Wikipedia (Free-to-play) + Newzoo 2023 Q4
+strategy,0.32,0.15,0.06,12.5,15.0,Wikipedia (Mobile_game) + GameAnalytics 2023
+rpg,0.3,0.13,0.05,18.0,12.0,Wikipedia (Mobile_game) + Newzoo 2023 Q4
