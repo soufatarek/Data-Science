@@ -70,7 +70,7 @@ def main():
     with col1:
         st.subheader("Day 1 Retention")
         fig1, ax1 = plt.subplots(figsize=(6, 4))
-        sns.barplot(data=retention_metrics, x="version", y="retention_1", ax=ax1, palette="Blues_d")
+        sns.barplot(data=retention_metrics, x="version", y="retention_1", hue="version", ax=ax1, palette="Blues_d", legend=False)
         ax1.set_ylim(0, 0.6)
         ax1.set_ylabel("Retention Rate")
         for i, v in enumerate(retention_metrics['retention_1']):
@@ -80,7 +80,7 @@ def main():
     with col2:
         st.subheader("Day 7 Retention")
         fig2, ax2 = plt.subplots(figsize=(6, 4))
-        sns.barplot(data=retention_metrics, x="version", y="retention_7", ax=ax2, palette="Greens_d")
+        sns.barplot(data=retention_metrics, x="version", y="retention_7", hue="version", ax=ax2, palette="Greens_d", legend=False)
         ax2.set_ylim(0, 0.3)
         ax2.set_ylabel("Retention Rate")
         for i, v in enumerate(retention_metrics['retention_7']):
