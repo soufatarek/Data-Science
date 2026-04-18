@@ -25,3 +25,6 @@ imbalanced-learn>=0.10.0
 
 # Utility
 tqdm>=4.65.0
+
+# Dashboard
+streamlit>=1.30.0

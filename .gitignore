@@ -26,5 +26,9 @@ Thumbs.db
 *.joblib
 *.pkl
 
-# PDF coursework descriptions
+# PDF coursework descriptions & generated reports
 KH5004CMD*.pdf
+*.pdf
+
+# Stray images in root
+/output.png

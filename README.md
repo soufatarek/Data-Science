@@ -18,14 +18,14 @@ The goal is to determine whether moving a level gate from Level 30 to Level 40 a
 
 | Phase | Location |
 |-------|----------|
-| Business Understanding | `notebooks/final_pipeline.ipynb` Step 1 (9 subsections) |
-| Data Understanding | `notebooks/04_eda_visualizations.ipynb` (16 plots) + `final_pipeline.ipynb` Steps 2–3 |
+| Business Understanding | `notebooks/01_business_understanding.ipynb` (9 subsections) |
+| Data Understanding | `notebooks/02_data_audit_and_cleaning.ipynb` + `notebooks/04_eda_visualizations.ipynb` (16 plots) |
 | Data Preparation | `src/processing.py` → `data_audit()`, `preprocess_data()`, `engineer_features()` |
 | Web Scraping | `src/scraping.py` → `run_full_scraping_pipeline()` |
 | Modelling | `src/modeling.py` → `train_models()`, `tune_hyperparameters()` |
-| Evaluation | `notebooks/final_pipeline.ipynb` Steps 10–12 |
-| Scalability | `notebooks/final_pipeline.ipynb` Step 13 |
-| Conclusion | `notebooks/final_pipeline.ipynb` (Pipeline Complete) |
+| Evaluation | `notebooks/06_evaluation_and_ab_testing.ipynb` |
+| Scalability | `notebooks/06_evaluation_and_ab_testing.ipynb` (scalability section) |
+| Conclusion | `notebooks/07_conclusions.ipynb` |
 
 ## Project Structure
 
@@ -47,8 +47,7 @@ The goal is to determine whether moving a level gate from Level 30 to Level 40 a
 │   ├── 04_eda_visualizations.ipynb          # Phase 2: 16 publication-quality plots
 │   ├── 05_feature_engineering_and_modeling.ipynb  # Phase 3-4: Features & ML training
 │   ├── 06_evaluation_and_ab_testing.ipynb   # Phase 5: Evaluation & statistics
-│   ├── 07_conclusions.ipynb                 # Phase 6: Conclusions & recommendations
-│   └── final_pipeline.ipynb                 # Reference: full pipeline (single file)
+│   └── 07_conclusions.ipynb                 # Phase 6: Conclusions & recommendations
 ├── 📁 src/
 │   ├── __init__.py
 │   ├── processing.py               # Load, audit, clean, features, split
@@ -56,7 +55,8 @@ The goal is to determine whether moving a level gate from Level 30 to Level 40 a
 │   ├── modeling.py                 # imblearn Pipeline, evaluation, tuning, persistence
 │   └── scraping.py                 # Real BeautifulSoup scraping (sequential + parallel)
 ├── 📁 reports/
-│   └── 📁 figures/                 # Auto-generated visualisations
+│   ├── 📁 figures/                 # Auto-generated visualisations
+│   └── cookie_cats_report.md       # Full analysis report
 ├── 📄 requirements.txt
 ├── 📄 .gitignore
 └── 📄 README.md

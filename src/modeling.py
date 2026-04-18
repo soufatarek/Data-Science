@@ -363,8 +363,7 @@ def tune_hyperparameters(
     if model_name == 'XGBoost':
         base_pipe = build_pipeline(
             XGBClassifier(random_state=random_state, eval_metric='logloss',
-                          use_label_encoder=False, device='cuda',
-                          tree_method='hist'),
+                          use_label_encoder=False, tree_method='hist'),
             preprocessor, random_state=random_state,
         )
         param_grid = {
@@ -386,8 +385,9 @@ def tune_hyperparameters(
         raise ValueError(f"Tuning not implemented for '{model_name}'")
 
     print(f"Tuning {model_name} ({cv}-fold CV, scoring={scoring}) …")
+    # n_jobs=1 avoids multiprocessing worker crashes in Jupyter on Windows
     gs = GridSearchCV(
-        base_pipe, param_grid, cv=cv, scoring=scoring, n_jobs=-1, verbose=0,
+        base_pipe, param_grid, cv=cv, scoring=scoring, n_jobs=1, verbose=0,
     )
     gs.fit(X_train, y_train)
 
@@ -489,7 +489,7 @@ if __name__ == "__main__":
     df = load_data()
     df = preprocess_data(df)
     df = engineer_features(df)
-    X_train, X_test, y_train, y_test = prepare_modeling_data(df)
+    X_train, X_test, y_train, y_test, feature_names = prepare_modeling_data(df)
 
     trained = train_models(X_train, y_train)
     results = evaluate_all_models(trained, X_test, y_test)

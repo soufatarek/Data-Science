@@ -423,7 +423,7 @@ def prepare_modeling_data(
     target_col: str = 'retention_7',
     test_size: float = 0.2,
     random_state: int = 42,
-) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series]:
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, pd.Series, list]:
     """
     Prepare feature matrix and target vector, then split into train/test.
 
@@ -442,7 +442,7 @@ def prepare_modeling_data(
         random_state: Seed for reproducibility.
 
     Returns:
-        ``(X_train, X_test, y_train, y_test)``
+        ``(X_train, X_test, y_train, y_test, feature_names)``
     """
     feature_cols = [
         'sum_gamerounds',
@@ -464,7 +464,8 @@ def prepare_modeling_data(
 
     print(f"Train: {X_train.shape[0]:,}  |  Test: {X_test.shape[0]:,}")
     print(f"Positive-class rate (train): {y_train.mean():.4f}")
-    return X_train, X_test, y_train, y_test
+    print(f"Features ({len(available)}): {available}")
+    return X_train, X_test, y_train, y_test, available
 
 
 # ---------------------------------------------------------------------------
@@ -483,4 +484,4 @@ if __name__ == "__main__":
     print("\nRetention Metrics:")
     for k, v in metrics.items():
         print(f"  {k}: {v:.4f}")
-    X_train, X_test, y_train, y_test = prepare_modeling_data(df_feat)
+    X_train, X_test, y_train, y_test, feature_names = prepare_modeling_data(df_feat)
