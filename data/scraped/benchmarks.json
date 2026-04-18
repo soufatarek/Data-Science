@@ -1,8 +1,8 @@
 {
   "performance": {
-    "sequential_time_s": 2.9748,
-    "parallel_time_s": 1.1134,
-    "speedup": 2.67,
+    "sequential_time_s": 2.5079,
+    "parallel_time_s": 1.0974,
+    "speedup": 2.29,
     "urls_count": 4
   },
   "scraped_metadata": [
@@ -25,7 +25,7 @@
       ],
       "paragraph_count": 41,
       "url": "https://en.wikipedia.org/wiki/Mobile_game",
-      "scrape_timestamp": "2026-04-07T11:54:05.787474"
+      "scrape_timestamp": "2026-04-18T16:55:47.336634"
     },
     {
       "title": "Free-to-play",
@@ -48,7 +48,7 @@
       ],
       "paragraph_count": 32,
       "url": "https://en.wikipedia.org/wiki/Free-to-play",
-      "scrape_timestamp": "2026-04-07T11:54:05.301313"
+      "scrape_timestamp": "2026-04-18T16:55:47.353814"
     },
     {
       "title": "Video game industry",
@@ -94,7 +94,7 @@
       ],
       "paragraph_count": 99,
       "url": "https://en.wikipedia.org/wiki/Video_game_industry",
-      "scrape_timestamp": "2026-04-07T11:54:05.572360"
+      "scrape_timestamp": "2026-04-18T16:55:47.713731"
     },
     {
       "title": "List of most-played mobile games by player count",
@@ -107,7 +107,7 @@
       ],
       "paragraph_count": 2,
       "url": "https://en.wikipedia.org/wiki/List_of_most-played_mobile_games_by_player_count",
-      "scrape_timestamp": "2026-04-07T11:54:05.196288"
+      "scrape_timestamp": "2026-04-18T16:55:47.175061"
     }
   ],
   "genre_benchmarks": [
@@ -158,5 +158,5 @@
     }
   ],
   "scraped_table_rows": 0,
-  "timestamp": "2026-04-07T11:54:05.930988"
+  "timestamp": "2026-04-18T16:55:47.955822"
 }
