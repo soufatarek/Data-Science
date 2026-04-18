@@ -29,6 +29,7 @@ Thumbs.db
 # PDF coursework descriptions & generated reports
 KH5004CMD*.pdf
 *.pdf
+!reports/*.pdf
 
 # Stray images in root
 /output.png
