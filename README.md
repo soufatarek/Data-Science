@@ -18,14 +18,12 @@ The goal is to determine whether moving a level gate from Level 30 to Level 40 a
 
 | Phase | Location |
 |-------|----------|
-| Business Understanding | `notebooks/01_business_understanding.ipynb` (9 subsections) |
-| Data Understanding | `notebooks/02_data_audit_and_cleaning.ipynb` + `notebooks/04_eda_visualizations.ipynb` (16 plots) |
-| Data Preparation | `src/processing.py` → `data_audit()`, `preprocess_data()`, `engineer_features()` |
-| Web Scraping | `src/scraping.py` → `run_full_scraping_pipeline()` |
-| Modelling | `src/modeling.py` → `train_models()`, `tune_hyperparameters()` |
-| Evaluation | `notebooks/06_evaluation_and_ab_testing.ipynb` |
-| Scalability | `notebooks/06_evaluation_and_ab_testing.ipynb` (scalability section) |
-| Conclusion | `notebooks/07_conclusions.ipynb` |
+| Phase 1: Business Understanding | `notebooks/Phase_1_Business_Understanding.ipynb` |
+| Phase 2: Data Understanding | `notebooks/Phase_2_Data_Understanding.ipynb` (audit + scraping + 16 EDA plots) |
+| Phase 3: Data Preparation | `notebooks/Phase_3_Data_Preparation.ipynb` + `src/processing.py` |
+| Phase 4: Modelling | `notebooks/Phase_4_Modeling.ipynb` + `src/modeling.py` |
+| Phase 5: Evaluation | `notebooks/Phase_5_Evaluation.ipynb` + `src/ab_testing.py` |
+| Phase 6: Deployment | `notebooks/Phase_6_Deployment.ipynb` + `app/dashboard.py` |
 
 ## Project Structure
 
@@ -40,14 +38,13 @@ The goal is to determine whether moving a level gate from Level 30 to Level 40 a
 │   └── 📁 scraped/                 # Web-scraped data
 │       ├── benchmarks.json
 │       └── industry_benchmarks.csv
-├── 📁 notebooks/                   # 7 CRISP-DM phase notebooks
-│   ├── 01_business_understanding.ipynb      # Phase 1: Business context & research Qs
-│   ├── 02_data_audit_and_cleaning.ipynb     # Phase 2-3: Load, audit, clean
-│   ├── 03_web_scraping.ipynb                # Phase 2: External data scraping
-│   ├── 04_eda_visualizations.ipynb          # Phase 2: 16 publication-quality plots
-│   ├── 05_feature_engineering_and_modeling.ipynb  # Phase 3-4: Features & ML training
-│   ├── 06_evaluation_and_ab_testing.ipynb   # Phase 5: Evaluation & statistics
-│   └── 07_conclusions.ipynb                 # Phase 6: Conclusions & recommendations
+├── 📁 notebooks/                   # 6 CRISP-DM phase notebooks
+│   ├── Phase_1_Business_Understanding.ipynb  # Business context & research questions
+│   ├── Phase_2_Data_Understanding.ipynb      # Data audit, web scraping, EDA (16 plots)
+│   ├── Phase_3_Data_Preparation.ipynb        # Feature engineering & data transformation
+│   ├── Phase_4_Modeling.ipynb                # ML pipeline, SMOTE, model training
+│   ├── Phase_5_Evaluation.ipynb              # A/B testing & statistical evaluation
+│   └── Phase_6_Deployment.ipynb              # Conclusions, dashboard & scalability
 ├── 📁 src/
 │   ├── __init__.py
 │   ├── processing.py               # Load, audit, clean, features, split
