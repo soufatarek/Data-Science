@@ -70,11 +70,7 @@ The goal is to determine whether moving a level gate from Level 30 to Level 40 a
 2. **Create and activate a virtual environment**:
    ```bash
    python -m venv venv
-   # Windows
    venv\Scripts\activate
-   # Mac / Linux
-   source venv/bin/activate
-   ```
 
 3. **Install dependencies**:
    ```bash
